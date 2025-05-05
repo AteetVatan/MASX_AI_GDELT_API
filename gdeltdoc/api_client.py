@@ -155,7 +155,7 @@ class GdeltDoc:
             raise ValueError(f"Mode {mode} not in supported API modes")
 
         headers = {
-            "User-Agent": f"GDELT DOC Python API client {version} - https://github.com/AteetVatan/gdelt-doc-api"
+            "User-Agent": f"GDELT DOC Python API client {version} - https://github.com/AteetVatan/MASX_AI_GDELT_API"
         }
 
         response = requests.get(

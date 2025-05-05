@@ -150,7 +150,6 @@ class Filters:
             The query is an inexact match so this will return results from the domain you want, plus other domains
             which also match. You'll need to filter the results after you get them back to just the single domain.
 
-            For more information on this bug, please see https://github.com/AteetVatan/gdelt-doc-api/issues/35
 
         domain_exact
             Similar to `domain`, but requires an exact match.

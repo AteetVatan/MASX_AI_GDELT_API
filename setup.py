@@ -22,7 +22,7 @@ setuptools.setup(
     description="A client for the GDELT 2.0 Doc API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/AteetVatan/gdelt-doc-api",
+    url="https://github.com/AteetVatan/MASX_AI_GDELT_API",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
