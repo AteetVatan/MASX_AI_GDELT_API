@@ -1,5 +1,4 @@
 import requests
-import pandas as pd
 
 from gdeltdoc.filters import Filters
 
@@ -62,7 +61,7 @@ class GdeltDoc:
         """
         self.max_depth_json_parsing = json_parsing_max_depth
 
-    def article_search(self, filters: Filters) -> pd.DataFrame:
+    def article_search(self, filters: Filters):
         """
         Make a query against the `ArtList` API to return a DataFrame of news articles that
         match the supplied filters.
@@ -74,16 +73,16 @@ class GdeltDoc:
 
         Returns
         -------
-        pd.DataFrame
-            A pandas DataFrame of the articles returned from the API.
+        json
+            A json of the articles returned from the API.
         """
         articles = self._query("artlist", filters.query_string)
         if "articles" in articles:
-            return pd.DataFrame(articles["articles"])
+            return articles["articles"]
         else:
-            return pd.DataFrame()
+            return []
 
-    def timeline_search(self, mode: str, filters: Filters) -> pd.DataFrame:
+    def timeline_search(self, mode: str, filters: Filters):
         """
         Make a query using one of the API's timeline modes.
 
@@ -101,14 +100,14 @@ class GdeltDoc:
 
         Returns
         -------
-        pd.DataFrame
-            A pandas DataFrame of the articles returned from the API.
+        json
+            A json of the articles returned from the API.
         """
         timeline = self._query(mode, filters.query_string)
 
         # If no results
         if (timeline == {}) or (len(timeline["timeline"]) == 0):
-            return pd.DataFrame()
+            return {}
 
         results = {
             "datetime": [entry["date"] for entry in timeline["timeline"][0]["data"]]
@@ -122,10 +121,10 @@ class GdeltDoc:
                 entry["norm"] for entry in timeline["timeline"][0]["data"]
             ]
 
-        formatted = pd.DataFrame(results)
-        formatted["datetime"] = pd.to_datetime(formatted["datetime"])
+        # formatted = pd.DataFrame(results)
+        # formatted["datetime"] = pd.to_datetime(formatted["datetime"])
 
-        return formatted
+        return results
 
     def _query(self, mode: str, query_string: str) -> Dict:
         """
@@ -156,7 +155,7 @@ class GdeltDoc:
             raise ValueError(f"Mode {mode} not in supported API modes")
 
         headers = {
-            "User-Agent": f"GDELT DOC Python API client {version} - https://github.com/alex9smith/gdelt-doc-api"
+            "User-Agent": f"GDELT DOC Python API client {version} - https://github.com/AteetVatan/gdelt-doc-api"
         }
 
         response = requests.get(
