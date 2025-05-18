@@ -42,9 +42,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: 🛠️ Install Railway CLI
-        run: npm install -g railway
+        run: npm install -g @railway/cli
+
+      - name: 🔐 Authenticate with Railway
+        env:
+          RAILWAY_API_KEY: ${{ secrets.RAILWAY_TOKEN_MASXAI_GDELT }}
+        run: railway login --apiKey $RAILWAY_API_KEY
 
       - name: 🚀 Trigger Railway Deployment
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: railway up --service=masx_ai_gdelt_api
