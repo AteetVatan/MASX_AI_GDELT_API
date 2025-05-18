@@ -1,6 +1,6 @@
-# GDELT API Microservice
+# GDELT Data Access Layer (Microservice)
 This project is a **secure, Dockerized FastAPI microservice** for accessing GDELT 2.0 data via a RESTful interface to access to GDELT filters and timeline data.
-
+GDELT Integration Microservice, handles all external data retrieval from the GDELT API and provides a normalized interface.
 ---
 
 The Service to fetch data from the [GDELT 2.0 Doc API](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/).
