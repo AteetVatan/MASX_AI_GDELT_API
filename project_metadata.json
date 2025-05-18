@@ -1,6 +1,6 @@
 {
    "project_metadata": {
-    "title": "MASX AI GDELT Microservice API",
+    "title": "MASX AI GDELT Data Access Layer (Microservice)",
     "description": "This microservice provides access to the GDELT 2.0 dataset for:\n- 🔍 Article search by keyword, domain, language, etc.\n- 📈 Timeline analysis by volume, tone, language, or country.\n- 🎯 Use in LLM pipelines, geopolitics, or news intelligence apps.\n\nPowered by gdeltdoc wrapper and ready for API/LLM integration.",
     "version": "1.0.0",
     "contact": {
@@ -13,7 +13,7 @@
         "url": "https://opensource.org/licenses/MIT"
     }
 },"api_metadata": {
-    "message": "Masx AI GDELT Microservice is up and running.",
+    "message": "MASX AI GDELT Data Access Layer (Microservice) is up and running.",
     "docs": "/docs",
     "endpoints": {
         "/api/articles": "Search articles by keyword, domain, etc.",
