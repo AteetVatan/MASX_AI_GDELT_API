@@ -32,28 +32,28 @@ jobs:
       - name: 🧪 Run Tests with Unittest
         run: pipenv run python -m unittest discover -s tests -p "*.py"
 
-  deploy:
-    name: 🚀 Deploy to Railway
-    runs-on: ubuntu-latest
+  # deploy:
+  #   name: 🚀 Deploy to Railway
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: 🛎️ Checkout Repo
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: 🛎️ Checkout Repo
+  #       uses: actions/checkout@v3
 
-      - name: 🐍 Set up Python 3.10
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
+  #     - name: 🐍 Set up Python 3.10
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: "3.10"
 
-      - name: 📦 Install Pipenv
-        run: pip install pipenv
+  #     - name: 📦 Install Pipenv
+  #       run: pip install pipenv
 
-      - name: 📦 Install Dependencies
-        run: pipenv install --deploy
+  #     - name: 📦 Install Dependencies
+  #       run: pipenv install --deploy
 
-      - name: 🧪 Run Tests
-        run: pipenv run pytest
+  #     - name: 🧪 Run Tests
+  #       run: pipenv run pytest
 
-      - name: 🚀 Start Uvicorn App (Manual Start)
-        run: |
-          pipenv run uvicorn app_api:app --host 0.0.0.0 --port 8000 --workers 2
+  #     - name: 🚀 Start Uvicorn App (Manual Start)
+  #       run: |
+  #         pipenv run uvicorn app_api:app --host 0.0.0.0 --port 8000 --workers 2
