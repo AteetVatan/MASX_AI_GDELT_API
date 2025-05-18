@@ -1,23 +1,8 @@
-# GDELT API Microservice
-This project is a **secure, Dockerized FastAPI microservice** for accessing GDELT 2.0 data via a RESTful interface to access to GDELT filters and timeline data.
+# GDELT 2.0 Doc API Client
 
----
-
-The Service to fetch data from the [GDELT 2.0 Doc API](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/).
+A Python client to fetch data from the [GDELT 2.0 Doc API](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/).
 
 This allows for simpler, small-scale analysis of news coverage without having to deal with the complexities of downloading and managing the raw files from S3, or working with the BigQuery export.
-
----
-
-## 🚀 Features
-
-- ✅ REST API for Article and Timeline search
-- ✅ Built-in rate limiting with `slowapi`
-- 🔐 API key authentication via `X-API-Key`
-- 🐳 Docker support for easy deployment
-- 📑 Auto-generated Swagger docs at `/docs`
-
----
 
 ## Installation
 
@@ -26,64 +11,6 @@ This allows for simpler, small-scale analysis of news coverage without having to
 ```bash
 pip install gdeltdoc
 ```
-
-## API Usage
-
-The API provides two main endpoints for searching articles and timeline data. All endpoints require an API key to be passed in the `X-API-Key` header.
-
-### Authentication
-```bash
-curl -H "X-API-Key: your_api_key" http://localhost:5000/api/articles
-```
-
-### Endpoints
-
-#### 1. Article Search
-```bash
-POST /api/articles
-```
-
-Request body:
-```json
-{
-    "keyword": "climate change",
-    "start_date": "2023-01-01",
-    "end_date": "2023-01-31",
-    "domain": "bbc.com",
-    "country": "US",
-    "language": "en",
-    "maxrecords": 100
-}
-```
-
-#### 2. Timeline Search
-```bash
-POST /api/timeline
-```
-
-Request body:
-```json
-{
-    "mode": "timelinevol",
-    "keyword": "climate change",
-    "start_date": "2023-01-01",
-    "end_date": "2023-01-31",
-    "domain": "bbc.com",
-    "country": "US",
-    "language": "en"
-}
-```
-
-### Rate Limiting
-- Root endpoint: 60 requests per minute
-- Article and Timeline endpoints: 60 requests per minute
-
-### Timeline Modes
-- `timelinevol` - Volume of news coverage as percentage
-- `timelinevolraw` - Raw article counts
-- `timelinelang` - Breakdown by language
-- `timelinesourcecountry` - Breakdown by country
-- `timelinetone` - Average tone of coverage
 
 ## Use
 

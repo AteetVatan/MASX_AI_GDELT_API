@@ -38,6 +38,7 @@ async def verify_api_key(x_api_key: str = Header(..., alias="X-API-Key")):
     
 
 @app.get("/", tags=["System"])
+@limiter.limit("60/minute")
 def read_root(request: Request):
     """API metadata"""
     METADATA["api_metadata"]["timestamp"] = datetime.utcnow().isoformat()
