@@ -8,7 +8,9 @@ pandas = ">=2.2.3"
 requests = ">=2.32.3"
 typing-extensions = ">=4.13.0"
 black = "*"
-flask = "*"
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+slowapi = "*"
 
 [dev-packages]
 

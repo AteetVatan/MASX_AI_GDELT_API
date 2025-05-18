@@ -9,6 +9,7 @@ from gdeltdoc.errors import raise_response_error
 from gdeltdoc._version import version
 
 
+
 class GdeltDoc:
     """
     API client for the GDELT 2.0 Doc API
@@ -157,9 +158,11 @@ class GdeltDoc:
         headers = {
             "User-Agent": f"GDELT DOC Python API client {version} - https://github.com/AteetVatan/MASX_AI_GDELT_API"
         }
+        
+        url = f"https://api.gdeltproject.org/api/v2/doc/doc?query={query_string}&mode={mode}&format=json"
 
         response = requests.get(
-            f"https://api.gdeltproject.org/api/v2/doc/doc?query={query_string}&mode={mode}&format=json",
+            url,
             headers=headers,
         )
 

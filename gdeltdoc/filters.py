@@ -95,7 +95,7 @@ class Filters:
         start_date: Optional[Date] = None,
         end_date: Optional[Date] = None,
         timespan: Optional[str] = None,
-        num_records: int = 250,
+        max_records: int = 100,
         keyword: Optional[Filter] = None,
         domain: Optional[Filter] = None,
         domain_exact: Optional[Filter] = None,
@@ -105,7 +105,7 @@ class Filters:
         language: Optional[Filter] = None,
         theme: Optional[Filter] = None,
         tone: Optional[Filter] = None,
-        tone_absolute: Optional[Filter] = None,
+        tone_absolute: Optional[Filter] = None
     ) -> None:
         """
         Construct filters for the GDELT API.
@@ -133,8 +133,8 @@ class Filters:
             formats - https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/
             Must provide either `start_date` and `end_date` or `timespan`
 
-        num_records
-            The number of records to return. Only used in article list mode and can be up to 250.
+        max_records
+            The number of records to return. Only used in article list mode and can be up to 100.
 
         keyword
             Return articles containing the exact phrase `keyword` within the article text.
@@ -245,10 +245,11 @@ class Filters:
             self._validate_timespan(timespan)
             self.query_params.append(f"&timespan={timespan}")
 
-        if num_records > 250:
-            raise ValueError(f"num_records must 250 or less, not {num_records}")
-
-        self.query_params.append(f"&maxrecords={str(num_records)}")
+        if max_records:
+            self.query_params.append(f"&maxrecords={str(max_records)}")
+            
+        sort="datedesc" # default sort order, leter will do modifications
+        self.query_params.append(f"&sort={sort}")
 
     @property
     def query_string(self) -> str:
