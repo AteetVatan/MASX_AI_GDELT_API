@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException, Header, Request, Depends
-from fastapi.responses import JSONResponse
-from datetime import datetime
+from fastapi.responses import JSONResponse, RedirectResponse
 import json
 import uvicorn
 
@@ -40,11 +39,8 @@ async def verify_api_key(x_api_key: str = Header(..., alias="X-API-Key")):
 @app.get("/", tags=["System"])
 @limiter.limit("60/minute")
 def read_root(request: Request):
-    """API metadata"""
-    METADATA["api_metadata"]["timestamp"] = datetime.utcnow().isoformat()
-    return {
-        **METADATA["api_metadata"]
-    }
+    """Redirect to docs on root."""
+    return RedirectResponse(url="/docs")
 
 
 @app.post("/api/articles", tags=["Search"], dependencies=[Depends(verify_api_key)])
