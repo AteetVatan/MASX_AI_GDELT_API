@@ -25,6 +25,7 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: pipenv install --dev --deploy --ignore-pipfile
+        pipenv run pip install python-dotenv pydantic
 
       - name: 🧪 Run Tests with Pytest
         run: pipenv run pytest tests/
