@@ -46,5 +46,5 @@ jobs:
 
       - name: 🚀 Trigger Railway Deployment
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_MASXAI_GDELT }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: railway up --service=masx_ai_gdelt_api 
