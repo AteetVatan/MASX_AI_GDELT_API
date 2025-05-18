@@ -3,8 +3,7 @@ name: MASX AI GDELT Microservice CI
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+    # Avoids duplicate run from pull_request events
 
 jobs:
   test:
