@@ -1,4 +1,4 @@
-name: MASX AI GDELT Microservice CI/CD
+name: MASX AI GDELT Microservice CI
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: ✅ Run Pytest
+    name: ✅ Run Tests (Pytest + Unittest)
     runs-on: ubuntu-latest
 
     steps:
@@ -29,23 +29,5 @@ jobs:
       - name: 🧪 Run Tests with Pytest
         run: pipenv run pytest tests/
 
-      - name: 🧪 Run Unittest
+      - name: 🧪 Run Tests with Unittest
         run: pipenv run python -m unittest discover -s tests -p "*.py"
-
-  deploy:
-    name: 🚀 Deploy to Railway
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - name: 🛎️ Checkout Code
-        uses: actions/checkout@v3
-
-      - name: 🛠️ Install Railway CLI
-        run: npm install -g @railway/cli
-
-      - name: 🚀 Trigger Railway Deployment
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_GDELT }}
-        run: railway up --service=masx_ai_gdelt_api --ci
-
