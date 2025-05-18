@@ -3,7 +3,8 @@ name: MASX AI GDELT Microservice CI
 on:
   push:
     branches: [main]
-    # Avoids duplicate run from pull_request events
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
@@ -23,8 +24,7 @@ jobs:
         run: pip install pipenv
 
       - name: 📦 Install Dependencies
-        run: |
-          pipenv install --dev --deploy
+        run: pipenv install --dev --deploy --ignore-pipfile
 
       - name: 🧪 Run Tests with Pytest
         run: pipenv run pytest tests/
