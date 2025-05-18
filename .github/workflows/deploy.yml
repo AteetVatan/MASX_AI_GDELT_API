@@ -45,6 +45,4 @@ jobs:
         run: npm install -g @railway/cli
 
       - name: 🚀 Trigger Railway Deployment
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --service=masx_ai_gdelt_api 
+        run: railway up --service=masx_ai_gdelt_api --token ${{ secrets.RAILWAY_TOKEN }}
