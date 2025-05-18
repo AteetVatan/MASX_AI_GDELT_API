@@ -2,7 +2,7 @@ from gdeltdoc.validation import validate_tone
 import unittest
 
 
-class ValidateToneTestCase(unittest.TestCase):
+class TestValidateTone(unittest.TestCase):
     def valid_tone_doesnt_raise_error(self):
         validate_tone(">5")
 

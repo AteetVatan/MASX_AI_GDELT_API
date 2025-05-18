@@ -11,8 +11,11 @@ black = "*"
 fastapi = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 slowapi = "*"
+pytest = "*"
 
 [dev-packages]
+pytest = "*"
+unittest2 = "*"
 
 [requires]
 python_version = "3.13"

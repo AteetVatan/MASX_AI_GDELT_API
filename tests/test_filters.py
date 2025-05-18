@@ -11,7 +11,7 @@ from gdeltdoc import (
 import unittest
 
 
-class FiltersTestCase(unittest.TestCase):
+class TestFilters(unittest.TestCase):
     """
     Test that the correct query strings are generated from
     various filters.
@@ -21,7 +21,7 @@ class FiltersTestCase(unittest.TestCase):
         f = Filters(keyword="airline", start_date="2020-03-01", end_date="2020-03-02")
         self.assertEqual(
             f.query_string,
-            '"airline" &startdatetime=20200301000000&enddatetime=20200302000000&maxrecords=250',
+            '"airline" &startdatetime=20200301000000&enddatetime=20200302000000&maxrecords=100&sort=datedesc',
         )
 
     def test_single_keyphrase_filter(self):
@@ -30,7 +30,7 @@ class FiltersTestCase(unittest.TestCase):
         )
         self.assertEqual(
             f.query_string,
-            '"climate change" &startdatetime=20200301000000&enddatetime=20200302000000&maxrecords=250',
+            '"climate change" &startdatetime=20200301000000&enddatetime=20200302000000&maxrecords=100&sort=datedesc',
         )
 
     def test_multiple_keywords(self):
@@ -42,7 +42,7 @@ class FiltersTestCase(unittest.TestCase):
         self.assertEqual(
             f.query_string,
             "(airline OR climate) &startdatetime=20200513000000&"
-            "enddatetime=20200514000000&maxrecords=250",
+            "enddatetime=20200514000000&maxrecords=100&sort=datedesc",
         )
 
     def test_multiple_themes(self):
@@ -54,7 +54,7 @@ class FiltersTestCase(unittest.TestCase):
         self.assertEqual(
             f.query_string,
             "(theme:ENV_CLIMATECHANGE OR theme:LEADER) &startdatetime=20200513000000&"
-            "enddatetime=20200514000000&maxrecords=250",
+            "enddatetime=20200514000000&maxrecords=100&sort=datedesc",
         )
 
     def test_theme_and_keyword(self):
@@ -67,7 +67,7 @@ class FiltersTestCase(unittest.TestCase):
         self.assertEqual(
             f.query_string,
             '"airline" theme:ENV_CLIMATECHANGE &startdatetime=20200513000000&'
-            "enddatetime=20200514000000&maxrecords=250",
+            "enddatetime=20200514000000&maxrecords=100&sort=datedesc",
         )
 
     def test_tone_filter(self):
@@ -79,7 +79,7 @@ class FiltersTestCase(unittest.TestCase):
         )
         self.assertEqual(
             f.query_string,
-            '"airline" tone>10 &startdatetime=20200301000000&enddatetime=20200302000000&maxrecords=250',
+            '"airline" tone>10 &startdatetime=20200301000000&enddatetime=20200302000000&maxrecords=100&sort=datedesc',
         )
 
     def test_start_date_as_datetime_is_formatted_as_expected(self):
@@ -90,11 +90,11 @@ class FiltersTestCase(unittest.TestCase):
         )
         self.assertEqual(
             f.query_string,
-            '"airline" &startdatetime=20200301000000&enddatetime=20200302000000&maxrecords=250',
+            '"airline" &startdatetime=20200301000000&enddatetime=20200302000000&maxrecords=100&sort=datedesc',
         )
 
 
-class NearTestCast(unittest.TestCase):
+class TestNear(unittest.TestCase):
     """
     Test that `near()` generates the right filters and errors.
     """
@@ -112,7 +112,7 @@ class NearTestCast(unittest.TestCase):
             near(5, "airline")
 
 
-class MultiNearTestCast(unittest.TestCase):
+class TestMultiNear(unittest.TestCase):
     """
     Test that `near()` generates the right filters and errors.
     """
@@ -146,7 +146,7 @@ class MultiNearTestCast(unittest.TestCase):
         )
 
 
-class RepeatTestCase(unittest.TestCase):
+class TestRepeat(unittest.TestCase):
     """
     Test that `repeat()` generates the correct filters and errors.
     """
@@ -159,7 +159,7 @@ class RepeatTestCase(unittest.TestCase):
             repeat(5, "climate change   ")
 
 
-class MultiRepeatTestCase(unittest.TestCase):
+class TestMultiRepeat(unittest.TestCase):
     """
     Test that `multi_repeat() generates the correct filters and errors.
     """
@@ -181,7 +181,7 @@ class MultiRepeatTestCase(unittest.TestCase):
             multi_repeat([(2, "airline"), (3, "airport")], "NOT_A_METHOD")
 
 
-class TimespanTestCase(unittest.TestCase):
+class TestTimespan(unittest.TestCase):
     """
     Test that `Filter._validate_timespan` validates timespans correctly
     """

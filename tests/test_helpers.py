@@ -4,7 +4,7 @@ from datetime import datetime
 from gdeltdoc.helpers import format_date
 
 
-class FormatDateTestCase(unittest.TestCase):
+class TestFormatDate(unittest.TestCase):
     def test_returns_string_input(self):
         date = "2020-01-01"
         self.assertEqual("20200101000000", format_date(date))

@@ -19,7 +19,7 @@ def build_response(status_code: int) -> Response:
     return response
 
 
-class RaiseResponseErrorTestCase(unittest.TestCase):
+class TestRaiseResponseError(unittest.TestCase):
     def test_doesnt_raise_when_status_200(self):
         raise_response_error(build_response(HttpResponseCodes.OK.value))
 

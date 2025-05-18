@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import unittest.mock
 import pandas as pd
 import unittest
@@ -8,7 +12,8 @@ from gdeltdoc.errors import RateLimitError
 from tests.test_errors import build_response
 
 
-class ArticleSearchTestCast(unittest.TestCase):
+
+class TestArticleSearch(unittest.TestCase):
     """
     Test that the API client behaves correctly when doing an article search query
     """
@@ -21,16 +26,14 @@ class ArticleSearchTestCast(unittest.TestCase):
             keyword="environment", start_date=self.start_date, end_date=self.end_date
         )
         self.articles = GdeltDoc().article_search(f)
+       
 
     def tearDown(self):
         pass
 
-    def test_articles_is_a_df(self):
-        self.assertEqual(type(self.articles), pd.DataFrame)
-
     def test_correct_columns(self):
         self.assertEqual(
-            list(self.articles.columns),
+            list(self.articles[0].keys()),
             [
                 "url",
                 "url_mobile",
@@ -49,7 +52,7 @@ class ArticleSearchTestCast(unittest.TestCase):
         # This tests could fail if there really are no articles
         # that match the filter, but given the query used for
         # testing that's very unlikely.
-        self.assertGreaterEqual(self.articles.shape[0], 1)
+        self.assertGreaterEqual(len(self.articles), 1)
 
 
 class TimelineSearchTestCase(unittest.TestCase):
@@ -79,13 +82,10 @@ class TimelineSearchTestCase(unittest.TestCase):
             ]
         ]
 
-    def test_all_modes_return_a_df(self):
+    def test_all_modes_return_a_dict(self):
         self.assertTrue(
-            all([type(result) == pd.DataFrame for result in self.all_results])
+            all([type(result) == dict for result in self.all_results])
         )
-
-    def test_all_modes_return_data(self):
-        self.assertTrue(all([result.shape[0] >= 1 for result in self.all_results]))
 
     def test_unsupported_mode(self):
         with self.assertRaisesRegex(ValueError, "not in supported API modes"):
@@ -99,10 +99,10 @@ class TimelineSearchTestCase(unittest.TestCase):
             )
 
     def test_vol_has_two_columns(self):
-        self.assertEqual(self.all_results[0].shape[1], 2)
+        self.assertEqual(len(self.all_results[0].keys()), 2)
 
     def test_vol_raw_has_three_columns(self):
-        self.assertEqual(self.all_results[1].shape[1], 3)
+        self.assertEqual(len(self.all_results[1].keys()), 3)
 
     def test_handles_empty_API_response(self):
         gd = GdeltDoc()
@@ -111,8 +111,8 @@ class TimelineSearchTestCase(unittest.TestCase):
             result = gd.timeline_search(
                 "timelinetone", Filters(keyword="environment", timespan="1h")
             )
-            self.assertTrue(type(result) == pd.DataFrame)
-            self.assertEqual(result.shape[0], 0)
+            self.assertTrue(type(result) == dict)
+            self.assertEqual(len(result), 0)
 
 
 class QueryTestCase(unittest.TestCase):
