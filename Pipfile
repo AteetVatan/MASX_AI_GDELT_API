@@ -13,6 +13,9 @@ uvicorn = {extras = ["standard"], version = "*"}
 slowapi = "*"
 pytest = "*"
 exceptiongroup = "*"
+python-dotenv = "*"
+pydantic = "*"
+
 
 [dev-packages]
 pytest = "*"
