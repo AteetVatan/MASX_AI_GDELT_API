@@ -8,52 +8,37 @@ on:
 
 jobs:
   test:
-    name: ✅ Run Tests (Pytest + Unittest)
+    name: Run Tests (Pytest + Unittest)
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🛎️ Checkout Code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: 🐍 Set up Python 3.10
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      - name: 📦 Install Pipenv
+      - name: Install Pipenv
         run: pip install pipenv
 
-      - name: 📦 Install Dependencies
+      - name: Install Dependencies
         run: pipenv install --dev --deploy --ignore-pipfile
 
-      - name: 🧪 Run Tests with Pytest
+      - name: Run Tests with Pytest
         run: pipenv run pytest tests/
 
-      - name: 🧪 Run Tests with Unittest
+      - name: Run Tests with Unittest
         run: pipenv run python -m unittest discover -s tests -p "*.py"
 
-  # deploy:
-  #   name: 🚀 Deploy to Railway
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: 🛎️ Checkout Repo
-  #       uses: actions/checkout@v3
-
-  #     - name: 🐍 Set up Python 3.10
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: "3.10"
-
-  #     - name: 📦 Install Pipenv
-  #       run: pip install pipenv
-
-  #     - name: 📦 Install Dependencies
-  #       run: pipenv install --deploy
-
-  #     - name: 🧪 Run Tests
-  #       run: pipenv run pytest
-
-  #     - name: 🚀 Start Uvicorn App (Manual Start)
-  #       run: |
-  #         pipenv run uvicorn app_api:app --host 0.0.0.0 --port 8000 --workers 2
+  deploy:
+    name: Deploy to Render.com
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Trigger Render Deploy Hook
+        run: |
+          curl -X POST https://api.render.com/deploy/srv-<your-service-id>?key=<your-deploy-token>
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}

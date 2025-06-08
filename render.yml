@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: masx-gdelt-api
+    env: docker
+    plan: free
+    autoDeploy: true    # Automatically redeploys on every GitHub push
+    buildCommand: ""
+    startCommand: ""
+    envVars:
+      - key: GDELT_API_KEY   
+        sync: false      # Securely passed at deploy time via Render dashboard
+      - key: DEFAULT_KEYWORDS
+        value: "Europe,Germany"   # Fallback keywords if none provided by controller
+      - key: ENV 
+        value: "prod"   # Set app behavior based on environment (prod/dev)
