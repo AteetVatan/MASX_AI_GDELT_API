@@ -21,9 +21,9 @@ app = FastAPI(**METADATA["project_metadata"])
 
 
 # Rate limiter
-limiter = Limiter(key_func=get_remote_address)
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+#limiter = Limiter(key_func=get_remote_address)
+#app.state.limiter = limiter
+#app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # GDELT client
 GDELT_CLIENT = GdeltDoc()
@@ -37,14 +37,14 @@ async def verify_api_key(x_api_key: str = Header(..., alias="X-API-Key")):
     
 
 @app.get("/", tags=["System"])
-@limiter.limit("60/minute")
+#@limiter.limit("60/minute")
 def read_root(request: Request):
     """Redirect to docs on root."""
     return RedirectResponse(url="/docs")
 
 
 @app.post("/api/articles", tags=["Search"], dependencies=[Depends(verify_api_key)])
-@limiter.limit("60/minute")
+#@limiter.limit("60/minute")
 async def search_articles(req: ArticleSearchRequest, request: Request):
     try:
         start_date, end_date = Validators.get_and_validate_date_range(
@@ -67,7 +67,7 @@ async def search_articles(req: ArticleSearchRequest, request: Request):
 
 
 @app.post("/api/timeline", tags=["Timeline"], dependencies=[Depends(verify_api_key)])
-@limiter.limit("60/minute")
+#@limiter.limit("60/minute")
 async def search_timeline(req: TimelineRequest, request: Request):
     """Search timeline"""
     try:
